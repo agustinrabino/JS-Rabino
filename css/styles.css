@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Poppins; }
+
+.calc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: aqua;
+  height: 120px; }
+  .calc h2 {
+    display: block; }
+
+.bmi {
+  width: 100%; }
+  .bmi img {
+    width: inherit;
+    object-fit: contain; }
+
+/*# sourceMappingURL=styles.css.map */

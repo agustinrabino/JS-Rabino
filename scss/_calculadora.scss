@@ -1,0 +1,19 @@
+.calc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: aqua;
+    height: 120px;
+
+    h2{
+        display: block;
+    }
+}
+
+.bmi{
+    width: 100%;
+    img{
+        width: inherit;
+        object-fit: contain;
+    }
+}
