@@ -23,36 +23,34 @@ class Usuario{
 let buttonAgregarUsuario = document.getElementById("buttonAgregarUsuario")
 buttonAgregarUsuario.addEventListener("click", agregarUsuario)
 function agregarUsuario() {
+    let calcReturn = document.getElementById("calcReturn")
+    calcReturn.innerHTML = ``
+
     let formulario = document.createElement("form")
     formulario.setAttribute("id","formulario")
     formulario.setAttribute("class","form")
     formulario.innerHTML = `
         <div class="">
             <label for="nombreUsuario" class="form-label">Nombre</label>
-            <input type="text" class="form-control nombre" id="nombreUsuario">
+            <input type="text" class="form-control nombre" id="nombreUsuario" required>
         </div>
         <div class="">
             <label for="edadUsuario" class="form-label">Edad</label>
-            <input type="number" class="form-control" id="edadUsuario">
+            <input type="number" class="form-control" id="edadUsuario" required>
         </div>
         <div class="">
             <label for="alturaUsuario" class="form-label">Altura (cm)</label>
-            <input type="number" class="form-control" id="alturaUsuario">
+            <input type="number" class="form-control" id="alturaUsuario" required>
         </div>
-        <button type="button" class="btn btn-primary submitDatos" id="submitDatos" ><svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"></path> </g></svg></button>
+        <button type="submit" class="btn btn-primary submitDatos" id="submitDatos" ><svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"></path> </g></svg></button>
         `
     
     let formularioReturn = document.getElementById("formularioReturn")
     formularioReturn.innerHTML = ``
     formularioReturn.append(formulario)
-
-    let submitDatos = document.getElementById("submitDatos")
-    submitDatos.addEventListener("click", nuevoUsuario)
+    formulario.addEventListener("submit", nuevoUsuario)
 
     function nuevoUsuario() {
-        let calcReturn = document.getElementById("calcReturn")
-        calcReturn.innerHTML = ``
-
         let contenedor = document.createElement("div")
         contenedor.setAttribute("class","infoReturn")
 
@@ -79,15 +77,15 @@ function verUsuarios(){
     formularioReturn.innerHTML = ``
 
     let contenedor = document.createElement("div")
-        contenedor.setAttribute("class","infoReturn")
+    contenedor.setAttribute("class","infoReturn")
     
-        let consoleLog1 = document.createElement("p")
-        consoleLog1.innerHTML = `Los usuarios en el sistema son: `
-        contenedor.append(consoleLog1)
+    let consoleLog1 = document.createElement("p")
+    consoleLog1.innerHTML = `Los usuarios en el sistema son: `
+    contenedor.append(consoleLog1)
 
     for(let usuario of usuarios){
         let consoleLogTemp = document.createElement("p")
-        consoleLogTemp.innerHTML = `Nombre: ${usuario.persona}, Edad: ${usuario.edad}, Altura: ${usuario.altura} y tiene : ${usuario.pesoLoggeado.length} peso/s loggeado/s`
+        consoleLogTemp.innerHTML = `Nombre: ${usuario.persona}, Edad: ${usuario.edad}, Altura: ${usuario.altura} y tiene : ${usuario.pesoLoggeado.length} peso/s loggeado/s en sistema`
         contenedor.append(consoleLogTemp)
     }
     let calcReturn = document.getElementById("calcReturn")
@@ -99,31 +97,35 @@ function verUsuarios(){
 let buttonAñadirPeso = document.getElementById("buttonAñadirPeso")
 buttonAñadirPeso.addEventListener("click", formularioLogPeso)
 function formularioLogPeso() {
+    let calcReturn = document.getElementById("calcReturn")
+    calcReturn.innerHTML = ``
+
     let formulario = document.createElement("form")
     formulario.setAttribute("id","formulario")
     formulario.setAttribute("class","form")
     formulario.innerHTML = `
         <div class="">
             <label for="nombreUsuario" class="form-label">Usuario</label>
-            <input type="text" class="form-control nombre" id="nombreUsuario">
+            <input type="text" class="form-control nombre" id="nombreUsuario" required>
         </div>
         <div class="">
             <label for="pesoUsuario" class="form-label">Peso</label>
-            <input type="number" class="form-control" id="pesoUsuario">
+            <input type="number" class="form-control" id="pesoUsuario" required>
         </div>
         <div class="">
             <label for="fecha" class="form-label">Fecha:</label>
-            <input type="date" id="fecha" class="fecha" name="fecha" value="2015-07-22"> 
+            <input type="date" id="fecha" class="fecha" name="fecha" value="2015-07-22" required> 
         </div>
-        <button type="button" class="btn btn-primary submitDatos" id="submitDatos" ><svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"></path> </g></svg></button>
+        <button type="submit" class="btn btn-primary submitDatos" id="submitDatos" ><svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"></path> </g></svg></button>
         `
     
     let formularioReturn = document.getElementById("formularioReturn")
     formularioReturn.innerHTML = ``
     formularioReturn.append(formulario)
-
-    let submitDatos = document.getElementById("submitDatos")
-    submitDatos.addEventListener("click", logPeso)
+    formulario.addEventListener("submit", (e) => {
+        e.preventDefault()
+        logPeso()
+    })
     
     function logPeso() {
         let nombreIngresado = document.getElementById("nombreUsuario").value;
@@ -146,8 +148,6 @@ function formularioLogPeso() {
             consoleLog1.innerHTML = `El usuario ${nombreIngresado} ingreso su peso: ${pesoIngresado} Kg para el dia: ${diaIngresado}`
             contenedor.append(consoleLog1)
         }              
-        let calcReturn = document.getElementById("calcReturn")
-        calcReturn.innerHTML = ``
         calcReturn.append(contenedor)
     }
 } //Funcion para Loggear peso en un objeto del array usuarios. La funcion crea un objeto con Fecha: y Peso: (mediante prompts y constructor Date) que se hace push al array pesoLoggeado del usuario seleccionado (usuario se encuentra mediante funcion find)
@@ -156,27 +156,29 @@ function formularioLogPeso() {
 let buttonConsultarPeso = document.getElementById("buttonConsultarPeso")
 buttonConsultarPeso.addEventListener("click", formularioVerPesos)
 function formularioVerPesos(){
+    let calcReturn = document.getElementById("calcReturn")
+    calcReturn.innerHTML = ``
+    
     let formulario = document.createElement("form")
     formulario.setAttribute("id","formulario")
     formulario.setAttribute("class","form")
     formulario.innerHTML = `
         <div class="">
             <label for="nombreUsuario" class="form-label">Nombre</label>
-            <input type="text" class="form-control nombre" id="nombreUsuario">
+            <input type="text" class="form-control nombre" id="nombreUsuario" required>
         </div>
-        <button type="button" class="btn btn-primary submitDatos" id="submitDatos" ><svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"></path> </g></svg></button>
+        <button type="submit" class="btn btn-primary submitDatos" id="submitDatos" ><svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"></path> </g></svg></button>
         `
     let formularioReturn = document.getElementById("formularioReturn")
     formularioReturn.innerHTML = ``
     formularioReturn.append(formulario)
-
-    let submitDatos = document.getElementById("submitDatos")
-    submitDatos.addEventListener("click", verPesos)
+    formulario.addEventListener("submit", (e) => {
+        e.preventDefault()
+        verPesos()
+    })
 
     function verPesos(){ 
         let nombreIngresado = document.getElementById("nombreUsuario").value;
-        let calcReturn = document.getElementById("calcReturn")
-        calcReturn.innerHTML = ``
         let contenedor = document.createElement("div")
         contenedor.setAttribute("class", "infoReturn")
         contenedor.setAttribute("id", "infoReturn")
@@ -191,7 +193,7 @@ function formularioVerPesos(){
         } else if (tempUsuario !== undefined) {            
             let tempPesos = tempUsuario.pesoLoggeado
             tempPesos.sort((a,b) => {
-                return new Date(b.fecha) - new Date (a.fecha)})
+                return new Date(b[0]) - new Date (a[0])})
             consoleLog1.innerHTML = `Los pesos del usuario son: `
             contenedor.append(consoleLog1)
             for(let peso of tempPesos){
@@ -209,11 +211,6 @@ function formularioVerPesos(){
                     grafico.setAttribute("id", "imageReturn")
                     calcReturn.append(grafico)     
 
-                    let tempPesos = tempUsuario.pesoLoggeado
-                    tempPesos.sort((a,b) => {
-                    return new Date(b.fecha) - new Date (a.fecha)})
-                    console.log(tempPesos)
-
                     let dataSet = anychart.data.set(tempPesos);
                     let firstSeriesData = dataSet.mapAs({ x: 0, value: 1 });
                 
@@ -225,7 +222,7 @@ function formularioVerPesos(){
                     chart.crosshair().enabled(true).yLabel(false).yStroke(null);
                     chart.tooltip().positionMode('point');
                     chart.title(
-                      `Grafico de los pesos registrados por el usuario ${nombreIngresado} en funcion del tiempo`
+                      `Grafico del peso del usuario ${nombreIngresado} en funcion del tiempo`
                       );
                 
                     chart.yAxis().title('Peso (Kg)');
@@ -251,30 +248,34 @@ function formularioVerPesos(){
 let buttonCalcularBmi = document.getElementById("buttonCalcularBmi")
 buttonCalcularBmi.addEventListener("click", formularioCalcularBmi)
 function formularioCalcularBmi(){
+    let calcReturn = document.getElementById("calcReturn")
+    calcReturn.innerHTML = ``
+
     let formulario = document.createElement("form")
     formulario.setAttribute("id","formulario")
     formulario.setAttribute("class","form")
     formulario.innerHTML = `
         <div class="">
             <label for="edadUsuario" class="form-label">Edad</label>
-            <input type="number" class="form-control" id="edadUsuario">
+            <input type="number" class="form-control" id="edadUsuario" required>
         </div>
         <div class="">
             <label for="alturaUsuario" class="form-label">Altura (cm)</label>
-            <input type="number" class="form-control" id="alturaUsuario">
+            <input type="number" class="form-control" id="alturaUsuario" required>
         </div>
         <div class="">
             <label for="pesoUsuario" class="form-label">Peso (Kg)</label>
-            <input type="number" class="form-control" id="pesoUsuario">
+            <input type="number" class="form-control" id="pesoUsuario" required>
         </div>
-        <button type="button" class="btn btn-primary submitDatos" id="submitDatos" ><svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"></path> </g></svg></button>
+        <button type="submit" class="btn btn-primary submitDatos" id="submitDatos" ><svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"></path> </g></svg></button>
         `
     let formularioReturn = document.getElementById("formularioReturn")
     formularioReturn.innerHTML = ``
     formularioReturn.append(formulario)
-
-    let submitDatos = document.getElementById("submitDatos")
-    submitDatos.addEventListener("click", calcularBmi)
+    formulario.addEventListener("submit", (e) => {
+        e.preventDefault()
+        calcularBmi()
+    })
 
     function calcularBmi(){
         let edadIngresada = document.getElementById("edadUsuario").value;
@@ -339,11 +340,44 @@ function formularioCalcularBmi(){
             consoleLog4.innerHTML = `Segun la edad ingresada por el usuario, este posee buena salud, recuerde tener habitos sanos y una dieta balanceada para seguir asi`
             contenedor.append(consoleLog4)  
         }
-        let calcReturn = document.getElementById("calcReturn")
-        calcReturn.innerHTML = ``
         calcReturn.append(contenedor)
         calcReturn.append(imageReturn)
     }
 } //Funcion diseñada para calcular el BMI. Prompt pide los datos del usuario y devuelve un valor de BMI con un analisis segun valor del BMI y peso (If Else)
 
+
+// Datos precargados
+let usuarioPrueba = new Usuario("usuarioBot", 35, 180)
+usuarioPrueba.pesoLoggeado = [
+    [(new Date("6/24/23")).toLocaleDateString(), 170],
+    [(new Date("7/21/15")).toLocaleDateString(), 80],
+    [(new Date("8/21/15")).toLocaleDateString(), 85],
+    [(new Date("9/21/15")).toLocaleDateString(), 80],
+    [(new Date("10/21/15")).toLocaleDateString(), 82],
+    [(new Date("11/21/15")).toLocaleDateString(), 78],
+    [(new Date("12/21/15")).toLocaleDateString(), 80],
+    [(new Date("1/21/16")).toLocaleDateString(), 65],
+    [(new Date("7/21/16")).toLocaleDateString(), 69],
+    [(new Date("1/21/17")).toLocaleDateString(), 75],
+    [(new Date("7/21/17")).toLocaleDateString(), 70],
+    [(new Date("8/21/17")).toLocaleDateString(), 70],
+    [(new Date("10/21/17")).toLocaleDateString(), 71],
+    [(new Date("1/21/18")).toLocaleDateString(), 71],
+    [(new Date("4/21/18")).toLocaleDateString(), 70],
+    [(new Date("5/21/18")).toLocaleDateString(), 78],
+    [(new Date("6/21/18")).toLocaleDateString(), 76],
+    [(new Date("8/21/18")).toLocaleDateString(), 78],
+    [(new Date("1/21/19")).toLocaleDateString(), 73],
+    [(new Date("3/21/19")).toLocaleDateString(), 74],
+    [(new Date("9/21/19")).toLocaleDateString(), 77],
+    [(new Date("7/21/20")).toLocaleDateString(), 74],
+    [(new Date("7/21/21")).toLocaleDateString(), 70],
+    [(new Date("2/21/22")).toLocaleDateString(), 71],
+    [(new Date("9/21/22")).toLocaleDateString(), 72],
+    [(new Date("10/21/22")).toLocaleDateString(), 70],
+    [(new Date("2/21/23")).toLocaleDateString(), 71],
+    [(new Date("6/21/23")).toLocaleDateString(), 70],
+]
+console.log(usuarioPrueba)
+usuarios.push(usuarioPrueba)
 
