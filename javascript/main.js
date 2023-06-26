@@ -1,10 +1,3 @@
-// Usuarios y constructor usuario
-function validarDato(dato){
-    while (isNaN(dato)){
-        dato = parseInt(prompt(`ATENCION el dato ingresado no es un numero, ingrese un valor numerico`))
-    }
-    return dato   
-} //Funcion para validar que el input sea un numero
 const usuarios = []
 class Usuario{
     constructor(persona, edad, altura){
@@ -15,7 +8,7 @@ class Usuario{
     }
 
     mostrarInfo(){
-        console.log(`El nuevo usuario se llama ${this.persona} su edad es ${this.edad} y su altura ${this.altura}`
+        console.log(`The new user is ${this.persona}, age: ${this.edad} and height: ${this.altura}`
         )
     }
 } //Constructor usuario, guarda nombre, edad y altura
@@ -31,15 +24,15 @@ function agregarUsuario() {
     formulario.setAttribute("class","form")
     formulario.innerHTML = `
         <div class="">
-            <label for="nombreUsuario" class="form-label">Nombre</label>
+            <label for="nombreUsuario" class="form-label">Name</label>
             <input type="text" class="form-control nombre" id="nombreUsuario" required>
         </div>
         <div class="">
-            <label for="edadUsuario" class="form-label">Edad</label>
+            <label for="edadUsuario" class="form-label">Age</label>
             <input type="number" class="form-control" id="edadUsuario" required>
         </div>
         <div class="">
-            <label for="alturaUsuario" class="form-label">Altura (cm)</label>
+            <label for="alturaUsuario" class="form-label">Height (cm)</label>
             <input type="number" class="form-control" id="alturaUsuario" required>
         </div>
         <button type="submit" class="btn btn-primary submitDatos" id="submitDatos" ><svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"></path> </g></svg></button>
@@ -57,14 +50,19 @@ function agregarUsuario() {
         let nombreIngresado = document.getElementById("nombreUsuario").value;
         let edadIngresada = document.getElementById("edadUsuario").value;
         let alturaIngresada = document.getElementById("alturaUsuario").value;
-        
-        let usuarioNuevo = new Usuario (nombreIngresado, edadIngresada, alturaIngresada)
-    
         let consoleLog1 = document.createElement("p")
-        consoleLog1.innerHTML = `El nuevo usuario ingresado al sistema se llama <strong>${nombreIngresado}</strong> su edad es <strong>${edadIngresada}</strong> y su altura <strong>${alturaIngresada} cm</strong>`
-        contenedor.append(consoleLog1)
-        usuarios.push(usuarioNuevo)
 
+        let tempUsuario = usuarios.find((el) => el.persona.toLowerCase() == nombreIngresado.toLowerCase())
+
+        if (tempUsuario !== undefined) {
+            consoleLog1.innerHTML = `This username is already in the system. Please choose another one`
+            contenedor.append(consoleLog1)
+        } else if (tempUsuario === undefined) {            
+            let usuarioNuevo = new Usuario (nombreIngresado, edadIngresada, alturaIngresada)
+            consoleLog1.innerHTML = `The new user logged into the system is <strong>${nombreIngresado}</strong>, his/her age is <strong>${edadIngresada}</strong>, and his/her height is <strong>${alturaIngresada} cm</strong>`
+            usuarios.push(usuarioNuevo)
+        }
+        contenedor.append(consoleLog1)
         calcReturn.append(contenedor)
         formularioReturn.removeChild(formulario)
     }
@@ -80,12 +78,12 @@ function verUsuarios(){
     contenedor.setAttribute("class","infoReturn")
     
     let consoleLog1 = document.createElement("p")
-    consoleLog1.innerHTML = `Los usuarios en el sistema son: `
+    consoleLog1.innerHTML = `The users logged in the system are: `
     contenedor.append(consoleLog1)
 
     for(let usuario of usuarios){
         let consoleLogTemp = document.createElement("p")
-        consoleLogTemp.innerHTML = `Nombre: ${usuario.persona}, Edad: ${usuario.edad}, Altura: ${usuario.altura} y tiene : ${usuario.pesoLoggeado.length} peso/s loggeado/s en sistema`
+        consoleLogTemp.innerHTML = `Name: <strong>${usuario.persona}</strong>, Age: <strong>${usuario.edad}</strong>, Height: <strong>${usuario.altura}</strong>, and has : <strong>${usuario.pesoLoggeado.length}</strong> logged weights in the system`
         contenedor.append(consoleLogTemp)
     }
     let calcReturn = document.getElementById("calcReturn")
@@ -105,16 +103,16 @@ function formularioLogPeso() {
     formulario.setAttribute("class","form")
     formulario.innerHTML = `
         <div class="">
-            <label for="nombreUsuario" class="form-label">Usuario</label>
+            <label for="nombreUsuario" class="form-label">User</label>
             <input type="text" class="form-control nombre" id="nombreUsuario" required>
         </div>
         <div class="">
-            <label for="pesoUsuario" class="form-label">Peso</label>
+            <label for="pesoUsuario" class="form-label">Weight (Kg)</label>
             <input type="number" class="form-control" id="pesoUsuario" required>
         </div>
         <div class="">
             <label for="fecha" class="form-label">Fecha:</label>
-            <input type="date" id="fecha" class="fecha" name="fecha" value="2015-07-22" required> 
+            <input type="date" id="fecha" class="fecha" name="Date" value="2015-07-22" required> 
         </div>
         <button type="submit" class="btn btn-primary submitDatos" id="submitDatos" ><svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"></path> </g></svg></button>
         `
@@ -128,6 +126,8 @@ function formularioLogPeso() {
     })
     
     function logPeso() {
+        calcReturn.innerHTML = ``
+
         let nombreIngresado = document.getElementById("nombreUsuario").value;
         let pesoIngresado = document.getElementById("pesoUsuario").value;
         let diaIngresado = new Date(document.getElementById("fecha").value)
@@ -138,14 +138,18 @@ function formularioLogPeso() {
                                         
         let tempUsuario = usuarios.find((el) => el.persona.toLowerCase() == nombreIngresado.toLowerCase())
         if (tempUsuario === undefined) {
-            consoleLog1.innerHTML = `El usuario ingresado no se encuentra en la base de datos`
+            consoleLog1.innerHTML = `The user was not found in the system`
             contenedor.append(consoleLog1)
 
-        } else if (tempUsuario !== undefined) {            
-            let pesoDia = [diaIngresado, pesoIngresado]
-            tempUsuario.pesoLoggeado.push(pesoDia)
-
-            consoleLog1.innerHTML = `El usuario ${nombreIngresado} ingreso su peso: ${pesoIngresado} Kg para el dia: ${diaIngresado}`
+        } else {  
+            let diaUsuario = tempUsuario.pesoLoggeado.find((el) => el[0] == diaIngresado)
+            if (diaUsuario === undefined) {
+                let pesoDia = [diaIngresado, pesoIngresado]
+                tempUsuario.pesoLoggeado.push(pesoDia)
+                consoleLog1.innerHTML = `The user ${nombreIngresado} logged his weight: ${pesoIngresado} Kg for the date: ${diaIngresado}`
+            } else {
+                consoleLog1.innerHTML = `The user ${nombreIngresado} already logged a weight for this date`
+            }
             contenedor.append(consoleLog1)
         }              
         calcReturn.append(contenedor)
@@ -164,7 +168,7 @@ function formularioVerPesos(){
     formulario.setAttribute("class","form")
     formulario.innerHTML = `
         <div class="">
-            <label for="nombreUsuario" class="form-label">Nombre</label>
+            <label for="nombreUsuario" class="form-label">Name</label>
             <input type="text" class="form-control nombre" id="nombreUsuario" required>
         </div>
         <button type="submit" class="btn btn-primary submitDatos" id="submitDatos" ><svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"></path> </g></svg></button>
@@ -178,6 +182,7 @@ function formularioVerPesos(){
     })
 
     function verPesos(){ 
+        calcReturn.innerHTML = ``
         let nombreIngresado = document.getElementById("nombreUsuario").value;
         let contenedor = document.createElement("div")
         contenedor.setAttribute("class", "infoReturn")
@@ -186,7 +191,7 @@ function formularioVerPesos(){
 
         let tempUsuario = usuarios.find((el) => el.persona.toLowerCase() == nombreIngresado.toLowerCase())
         if (tempUsuario === undefined) {
-            consoleLog1.innerHTML = `El usuario ingresado no se encuentra en la base de datos`
+            consoleLog1.innerHTML = `The user <strong>${nombreIngresado}</strong>, was not found in the system`
             contenedor.append(consoleLog1)
             calcReturn.append(contenedor)     
 
@@ -194,11 +199,11 @@ function formularioVerPesos(){
             let tempPesos = tempUsuario.pesoLoggeado
             tempPesos.sort((a,b) => {
                 return new Date(b[0]) - new Date (a[0])})
-            consoleLog1.innerHTML = `Los pesos del usuario son: `
+            consoleLog1.innerHTML = `The weights for <strong>${nombreIngresado}</strong> are: `
             contenedor.append(consoleLog1)
             for(let peso of tempPesos){
                 let consoleLogTemp = document.createElement("p")
-                consoleLogTemp.innerHTML = `fecha: ${peso[0]}, peso: ${peso[1]} Kg`
+                consoleLogTemp.innerHTML = `Date: ${peso[0]}, Weight: ${peso[1]} Kg`
                 contenedor.append(consoleLogTemp)
             }
             calcReturn.append(contenedor)     
@@ -222,10 +227,10 @@ function formularioVerPesos(){
                     chart.crosshair().enabled(true).yLabel(false).yStroke(null);
                     chart.tooltip().positionMode('point');
                     chart.title(
-                      `Grafico del peso del usuario ${nombreIngresado} en funcion del tiempo`
+                      `Graph showing weights by date for user ${nombreIngresado}`
                       );
                 
-                    chart.yAxis().title('Peso (Kg)');
+                    chart.yAxis().title('Weight (Kg)');
                     chart.xAxis().labels().padding(5);
                 
                     let firstSeries = chart.line(firstSeriesData);
@@ -256,15 +261,15 @@ function formularioCalcularBmi(){
     formulario.setAttribute("class","form")
     formulario.innerHTML = `
         <div class="">
-            <label for="edadUsuario" class="form-label">Edad</label>
+            <label for="edadUsuario" class="form-label">Age</label>
             <input type="number" class="form-control" id="edadUsuario" required>
         </div>
         <div class="">
-            <label for="alturaUsuario" class="form-label">Altura (cm)</label>
+            <label for="alturaUsuario" class="form-label">Height (cm)</label>
             <input type="number" class="form-control" id="alturaUsuario" required>
         </div>
         <div class="">
-            <label for="pesoUsuario" class="form-label">Peso (Kg)</label>
+            <label for="pesoUsuario" class="form-label">Weight (Kg)</label>
             <input type="number" class="form-control" id="pesoUsuario" required>
         </div>
         <button type="submit" class="btn btn-primary submitDatos" id="submitDatos" ><svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"></path> </g></svg></button>
@@ -278,6 +283,7 @@ function formularioCalcularBmi(){
     })
 
     function calcularBmi(){
+        calcReturn.innerHTML = ``
         let edadIngresada = document.getElementById("edadUsuario").value;
         let alturaIngresada = document.getElementById("alturaUsuario").value;
         alturaIngresada = alturaIngresada/100;
@@ -287,7 +293,7 @@ function formularioCalcularBmi(){
         contenedor.setAttribute("class", "infoReturn")
     
         let consoleLog1 = document.createElement("p")
-        consoleLog1.innerHTML = `Los datos ingresados por el usuario son: <strong>edad</strong> ${edadIngresada} años, <strong>pesa</strong> ${pesoIngresado} Kg y <strong>mide</strong> ${alturaIngresada} metros`
+        consoleLog1.innerHTML = `The user's information is: <strong>Age</strong> ${edadIngresada} years, <strong>weight</strong> ${pesoIngresado} Kg, and <strong>height</strong> ${alturaIngresada} meters`
         contenedor.append(consoleLog1)
 
         let bmi = (pesoIngresado / Math.pow(alturaIngresada, 2))
@@ -296,34 +302,34 @@ function formularioCalcularBmi(){
         bmi = bmi.toFixed(2)
 
         let consoleLog2 = document.createElement("p")
-        consoleLog2.innerHTML = `el <strong>BMI</strong> del usario es: ${bmi}`
+        consoleLog2.innerHTML = `The user's <strong>BMI</strong> is: ${bmi}`
         contenedor.append(consoleLog2)
 
         let consoleLog3 = document.createElement("p")
         let imageReturn = document.createElement("img")
 
         if (bmi > 39.9) {
-            consoleLog3.innerHTML = `esto indica que es una persona <strong>extremadamente obesa</strong>`
+            consoleLog3.innerHTML = `This indicates the user is a person with <strong>extreme obesity</strong>`
             contenedor.append(consoleLog3)
             imageReturn.src = "./multimedia/bmi-40.gif"   
         
         } else if (bmi > 29.9) {
-            consoleLog3.innerHTML = `esto indica que es una persona <strong>obesa</strong>`
+            consoleLog3.innerHTML = `This indicates the user is an <strong>obese</strong> person`
             contenedor.append(consoleLog3)
             imageReturn.src = "./multimedia/bmi-35.gif"   
 
         } else if (bmi > 24.9) {
-            consoleLog3.innerHTML = `esto indica que es una persona con <strong>sobrepeso</strong>`
+            consoleLog3.innerHTML = `This indicates the user is a person with <strong>overweight</strong>`
             contenedor.append(consoleLog3)
             imageReturn.src = "./multimedia/bmi-30.gif"   
 
         } else if (bmi > 18.5){
-            consoleLog3.innerHTML = `esto indica que es una persona de <strong>peso sano</strong>`
+            consoleLog3.innerHTML = `This indicates the user is a person with <strong>healthy weight</strong>`
             contenedor.append(consoleLog3)
             imageReturn.src = "./multimedia/bmi-25.gif"   
 
         } else {
-            consoleLog3.innerHTML = `esto indica que es una persona flaca, por <strong>debajo de un peso sano</strong>`
+            consoleLog3.innerHTML = `This indicates the user is a skinny person, <strong>below a healthy weight</strong>`
             contenedor.append(consoleLog3)
             imageReturn.src = "./multimedia/bmi-18.gif"      
         }
@@ -331,13 +337,16 @@ function formularioCalcularBmi(){
         // Analisis del BMI 2, Edad
         let consoleLog4 = document.createElement("p")
         if (bmi > 29.9 & edadIngresada > 40) {
-            consoleLog4.innerHTML = `El usuario tiene un BMI:${bmi} y se encuentra en alto riesgo de salud dado su edad avanzada (${edadIngresada}), porfavor consulte un medico`
+            consoleLog4.innerHTML = `Given the information provided (BMI: ${bmi} and age: ${edadIngresada} years), the user has a high health risk, please talk to a clinician/nutritionist`
             contenedor.append(consoleLog4)   
-        } else if (bmi > 29.9 & edadIngresada > 40) {
-            consoleLog4.innerHTML = `El usuario no tiene un BMI saludable (${bmi}), dado que es una persona de edad joven (${edadIngresada}) le recomendamos que vea un medico nutricionista y monitoree su BMI para prevenir mayores problemas`
-            contenedor.append(consoleLog4)   
+        } else if (bmi > 29.9 & edadIngresada < 40) {
+            consoleLog4.innerHTML = `The user doesn't have a healthy BMI (${bmi}). However, the user is a young person (${edadIngresada} years) so he/she is not in an immediate risk. We recommend to seek a nutriosionits to change his/her dietary habits and monitor the BMI daily to prevent any health problems`
+            contenedor.append(consoleLog4)
+        } else if (bmi < 18.5) {
+            consoleLog4.innerHTML = `The user's BMI (${bmi}) is below the recommended value. While there is no immediate risk, we recommend to seek a nutriosionits to change his/her dietary habits and monitor the BMI daily to prevent any health problems`
+            contenedor.append(consoleLog4)      
         } else {
-            consoleLog4.innerHTML = `Segun la edad ingresada por el usuario, este posee buena salud, recuerde tener habitos sanos y una dieta balanceada para seguir asi`
+            consoleLog4.innerHTML = `The user has a healthy BMI (${bmi}), keep on with the good habits!`
             contenedor.append(consoleLog4)  
         }
         calcReturn.append(contenedor)
