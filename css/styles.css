@@ -110,6 +110,17 @@ main {
         padding: 20px 30px; }
         main .mainReturn .calcReturn .infoReturn p {
           font-size: x-large; }
+        main .mainReturn .calcReturn .infoReturn .usersReturn {
+          display: flex;
+          justify-content: space-between; }
+          main .mainReturn .calcReturn .infoReturn .usersReturn button {
+            margin-left: 8vw;
+            border-radius: 50%;
+            background-color: rgba(40, 135, 129, 0.5);
+            width: 50px;
+            height: 50px; }
+          main .mainReturn .calcReturn .infoReturn .usersReturn button:hover {
+            background-color: #288781; }
       main .mainReturn .calcReturn img {
         width: 200px;
         object-fit: contain; }
