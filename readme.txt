@@ -1,0 +1,1 @@
+Hello! my name is Agustin Rabino and this project I'm working at the moment (June 27th 2023) is the final assignment from the Javascript course I'm taking in CoderHouse. The course is the second of the front-end track they have, and is mainly focused on principles of JS. The course is expected to finish on July 16th 2023.

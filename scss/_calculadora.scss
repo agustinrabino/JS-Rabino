@@ -53,6 +53,7 @@ main{
     }
     .mainReturn{
         display: flex;
+        position: relative;
         flex-direction: column;
         justify-content: start;
         align-items: center;
@@ -144,6 +145,15 @@ main{
             .imageReturn{
                 width: 400px;
             }
+        }
+        .bannerOut{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            background-color: red;
         }
     }
 }

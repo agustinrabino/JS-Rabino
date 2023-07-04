@@ -1,6 +1,6 @@
 //Variable año para definir edad del usuario
 let fechaHoy = new Date()
- 
+
 //Constructor Usuario: guarda nombre, fecha de nacimiento, edad y altura de un nuevo usuario. Ademas crea un array vacio "pesoLoggeado" en el cual el usuario puede ingresar sus pesos.
 class Usuario{
     constructor(persona, nacimiento, altura){
@@ -464,3 +464,24 @@ function calcularBmi(){
     calcReturn.append(imageReturn)
 }
 
+//NO FUNCIONA La funcion warning() sirve para confirmar cuando el usuario quiere eliminar algun dato del localstorage
+
+// let banner = document.getElementById("banner")
+// let deleteValue = "no"
+// function warning(){
+//     banner.innerHTML = `
+//     <p>This element is going to be permanently deleted. Are you sure you want to continue?</p>
+//     <form id="deleteOrNot">
+//       <input type="radio" id="yes" name="deleteOrNot" value="yes">
+//       <label for="yes">Yes</label><br>
+//       <input type="radio" id="no" name="deleteOrNot" value="no">
+//       <label for="no">No</label><br>
+//       <input type="submit" value="Submit">
+//     </form>
+//     `
+//     banner.setAttribute("class", "bannerOut")
+//     banner.addEventListener("submit", () => {
+//         deleteValue = document.getElementById("deleteOrNot").value
+//         return
+//     })
+// }

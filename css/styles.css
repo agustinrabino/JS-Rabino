@@ -52,6 +52,7 @@ main {
       background-color: #288781; }
   main .mainReturn {
     display: flex;
+    position: relative;
     flex-direction: column;
     justify-content: start;
     align-items: center;
@@ -126,5 +127,13 @@ main {
         object-fit: contain; }
       main .mainReturn .calcReturn .imageReturn {
         width: 400px; }
+    main .mainReturn .bannerOut {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      background-color: red; }
 
 /*# sourceMappingURL=styles.css.map */
