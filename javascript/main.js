@@ -59,3 +59,12 @@ buttonConsultarPeso.addEventListener("click", usuarioPesosLoggeados)
 // funciones para calcular BMI
 let buttonCalcularBmi = document.getElementById("buttonCalcularBmi")
 buttonCalcularBmi.addEventListener("click", informacionBmi)
+
+// MediaQuery manipulations --adaptive response
+function openNav() {
+    document.getElementById("sideMenu").classList.add("sideMenuOn"),
+    document.body.addEventListener("click", closeNav)
+  }
+function closeNav() {
+    document.getElementById("sideMenu").classList.remove("sideMenuOn");
+}

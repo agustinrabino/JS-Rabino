@@ -6,12 +6,37 @@ class Usuario{
     constructor(persona, nacimiento, altura){
         this.persona = persona,
         this.nacimiento = nacimiento,
-        this.altura = parseInt(altura)
+        this.altura = parseInt(altura),
         this.pesoLoggeado = []
     }
 } 
 
 //TODAS LAS ACCIONES(BOTONES) SON FUNCIONES COMPUESTAS. EL EVENT "CLICK" DEL MENU VA A DESPLEGAR UN FORMULARIO DINAMICO QUE A SU VEZ TIENE UN EVENT "SUBMIT" INTERNO. EL EVENT SUBMIT INICIA UN DIV DE RETORNO CON LOS DATOS CALCULADOS/INGRESADOS SEGUN CORRESPONDA// 
+
+//Funcion para eliminar datos. al finalizar la funcion el localStorage se sobreescribe con el nuevo array. La funcion usa un for-of para crear Eventlistener "click" para cada elemento y los remueve con un splice. Incorpora SweetAlert2 para confirmar los delete
+function listenDelete(array, fun){
+    for (let item of array) {
+        let deleteIndex = array.indexOf(item)
+        let deleteButton = document.getElementById(`delete${deleteIndex}`)
+        deleteButton.addEventListener("click", (e) => {
+                e.preventDefault()
+                Swal.fire({
+                    title: `Are you sure you want to delete this?`,
+                    text: `you won't be able to revert this delete`,
+                    icon: `warning`,
+                    showCancelButton: true,
+                    confirmButtonText: "Delete",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        array.splice(deleteIndex, 1)
+                        localStorage.setItem("usuarios", JSON.stringify(usuarios))
+                        fun()
+                    }
+                });   
+            }        
+        )
+    }
+}
 
 //La funcion agregarUsuario() tiene un EventListener "click" que genera un formulario dinamico y el EventListener "submit" del formulario ejecuta la funcion nuevoUsuario(). 
 function agregarUsuario() {
@@ -86,34 +111,21 @@ function verUsuarios(){
 
     for(let usuario of usuarios){
         let edadIngresada = Math.floor((fechaHoy - new Date(usuario.nacimiento))/31560000000)
-        console.log(edadIngresada)
+        let indexUsuario = usuarios.indexOf(usuario)
         let consoleLogTemp = document.createElement("div")
         consoleLogTemp.setAttribute("class", "usersReturn")
         let consoleLogTempUser = document.createElement("p")
         consoleLogTempUser.innerHTML = `Name: <strong>${usuario.persona}</strong>, Age: <strong>${edadIngresada}</strong>, Height: <strong>${usuario.altura} cm</strong>, and has : <strong>${usuario.pesoLoggeado.length}</strong> logged weights in the system`
         let consoleLogTempDelete = document.createElement("div")
-        consoleLogTempDelete.innerHTML = `<button type="button" class="btn btn-primary" id="delete${usuario.persona}" ><svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 490 490" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <polygon points="456.851,0 245,212.564 33.149,0 0.708,32.337 212.669,245.004 0.708,457.678 33.149,490 245,277.443 456.851,490 489.292,457.678 277.331,245.004 489.292,32.337 "></polygon> </g></svg></button>`
+        consoleLogTempDelete.innerHTML = `<button type="button" class="btn btn-primary" id="delete${indexUsuario}" ><i class="fas fa-trash-alt"></i></button>`
         consoleLogTemp.append(consoleLogTempUser, consoleLogTempDelete)
         contenedor.append(consoleLogTemp)
     }
     let calcReturn = document.getElementById("calcReturn")
     calcReturn.innerHTML = ``
-    calcReturn.append(contenedor)
-    listenDelete()
+    calcReturn.append(contenedor);
+    listenDelete(usuarios, verUsuarios)
 } 
-
-//Funcion para eliminar usuarios del array principal. al finalizar la funcion el localStorage se sobreescribe con el nuevo array. La funcion usa un for-of para crear Eventlistener "click" para cada usuario y los remueve con un splice.
-function listenDelete(){
-    for (let usuario of usuarios) {
-        let deleteButton = document.getElementById(`delete${usuario.persona}`)
-        let deleteIndex = usuarios.indexOf(usuario)
-        deleteButton.addEventListener("click", () => {
-            usuarios.splice(deleteIndex, 1)
-            localStorage.setItem("usuarios", JSON.stringify(usuarios))
-            verUsuarios()  
-        })
-    }
-}
 
 //La funcion agregarPeso() tiene un EventListener "click" que genera un formulario dinamico y el EventListener "submit" del formulario ejecuta la funcion logPeso(). 
 function agregarPeso() {
@@ -245,7 +257,7 @@ function verPesos(){
                 let consoleLogTempPeso = document.createElement("p")
                 consoleLogTempPeso.innerHTML = `Date: ${peso[0]}, Weight: ${peso[1]} Kg`
                 let consoleLogTempDelete = document.createElement("div")
-                consoleLogTempDelete.innerHTML = `<button type="button" class="btn btn-primary" id="delete${indexPeso}" ><svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 490 490" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <polygon points="456.851,0 245,212.564 33.149,0 0.708,32.337 212.669,245.004 0.708,457.678 33.149,490 245,277.443 456.851,490 489.292,457.678 277.331,245.004 489.292,32.337 "></polygon> </g></svg></button>`
+                consoleLogTempDelete.innerHTML = `<button type="button" class="btn btn-primary" id="delete${indexPeso}" ><i class="fas fa-trash-alt"></i></button>`
                 consoleLogTemp.append(consoleLogTempPeso, consoleLogTempDelete)
                 contenedor.append(consoleLogTemp)
             }
@@ -292,6 +304,7 @@ function verPesos(){
             contenedor.append(consoleLog1)
             for(let peso of tempPesos){
                 let consoleLogTemp = document.createElement("p")
+                peso[2] > 25 && consoleLogTemp.setAttribute("class", "rojo")
                 consoleLogTemp.innerHTML = `Date: ${peso[0]}, BMI: ${peso[2]}`
                 contenedor.append(consoleLogTemp)
             }
@@ -339,20 +352,7 @@ function verPesos(){
                 chart.draw();
             });
         }    
-        listenDeletePeso(tempPesos)
-    }
-}
-
-//Funcion para eliminar pesos del array peso loggeado de un usuario. al finalizar la funcion el localStorage se sobreescribe con el nuevo array. La funcion usa un for-of para crear Eventlistener "click" para cada peso y los remueve con un splice.
-function listenDeletePeso(array){
-    for (let peso of array) {
-        let deleteIndex = array.indexOf(peso)
-        let deleteButton = document.getElementById(`delete${deleteIndex}`)
-        deleteButton.addEventListener("click", () => {
-            array.splice(deleteIndex, 1)
-            localStorage.setItem("usuarios", JSON.stringify(usuarios))
-            verPesos()  
-        })
+        listenDelete(tempPesos, verPesos)
     }
 }
 
@@ -464,24 +464,3 @@ function calcularBmi(){
     calcReturn.append(imageReturn)
 }
 
-//NO FUNCIONA La funcion warning() sirve para confirmar cuando el usuario quiere eliminar algun dato del localstorage
-
-// let banner = document.getElementById("banner")
-// let deleteValue = "no"
-// function warning(){
-//     banner.innerHTML = `
-//     <p>This element is going to be permanently deleted. Are you sure you want to continue?</p>
-//     <form id="deleteOrNot">
-//       <input type="radio" id="yes" name="deleteOrNot" value="yes">
-//       <label for="yes">Yes</label><br>
-//       <input type="radio" id="no" name="deleteOrNot" value="no">
-//       <label for="no">No</label><br>
-//       <input type="submit" value="Submit">
-//     </form>
-//     `
-//     banner.setAttribute("class", "bannerOut")
-//     banner.addEventListener("submit", () => {
-//         deleteValue = document.getElementById("deleteOrNot").value
-//         return
-//     })
-// }
