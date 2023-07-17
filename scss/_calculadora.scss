@@ -163,7 +163,7 @@ main{
 @media (max-width:1000px) {
     .header{
         display: flex;
-        width: clamp(400px,100vw, 1000px);
+        width: clamp(380px,100vw, 1000px);
         padding: 1vh 3vw;
         .headerBar{
             display: flex;
@@ -202,7 +202,7 @@ main{
     main{
         display: flex;
         padding: 1vh 3vw;
-        width: clamp(400px,100vw,1000px);
+        width: clamp(380px,100vw,1000px);
         height: auto;
 
         .sideMenu{
