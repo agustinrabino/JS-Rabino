@@ -4,6 +4,7 @@
         "nacimiento": "7/21/2000",
         "altura": 180,
         "pesoLoggeado": [
+            ["7/18/23", 85, 26.23],
             ["6/24/23", 80, 24.69],
             ["7/21/15", 80, 24.69],
             ["8/21/15", 85, 26.23],
@@ -32,6 +33,20 @@
             ["10/21/22", 70, 21.60],
             ["2/21/23", 71, 21.91],
             ["6/21/23", 70, 21.60]
+        ],
+        "calorieLoggeado": [
+            ["7/18/23", "Playing soccer", 508, 3, 1524],
+            ["6/24/23", "Playing basketball, non game", 435, 2, 870],
+            ["9/21/15", "Playing basketball, non game", 435, 1, 435],
+            ["1/21/16", "Playing basketball, non game", 435, 2, 870],
+            ["7/21/17", "Playing basketball, non game", 435, 1, 435],
+            ["10/21/17", "Playing basketball, non game", 435, 2, 870],
+            ["1/21/18", "Playing basketball, non game", 435, 4, 1740],
+            ["1/21/19", "Playing basketball, non game", 435, 2, 870],
+            ["9/21/19", "Playing basketball, non game", 435, 1, 435],
+            ["7/21/20", "Playing basketball, non game", 435, 4, 1740],
+            ["2/21/22", "Playing basketball, non game", 435, 2, 870],
+            ["6/21/23", "Playing basketball, non game", 435, 1, 435]
         ]
     }
 ]

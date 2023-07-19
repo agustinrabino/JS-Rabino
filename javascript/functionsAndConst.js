@@ -7,7 +7,8 @@ class Usuario{
         this.persona = persona,
         this.nacimiento = nacimiento,
         this.altura = parseInt(altura),
-        this.pesoLoggeado = []
+        this.pesoLoggeado = [],
+        this.calorieLoggeado = []
     }
 } 
 
@@ -115,7 +116,7 @@ function verUsuarios(){
         let consoleLogTemp = document.createElement("div")
         consoleLogTemp.setAttribute("class", "usersReturn")
         let consoleLogTempUser = document.createElement("p")
-        consoleLogTempUser.innerHTML = `Name: <strong>${usuario.persona}</strong>, Age: <strong>${edadIngresada}</strong>, Height: <strong>${usuario.altura} cm</strong>, and has : <strong>${usuario.pesoLoggeado.length}</strong> logged weights in the system`
+        consoleLogTempUser.innerHTML = `Name: <strong>${usuario.persona}</strong>, Age: <strong>${edadIngresada}</strong>, Height: <strong>${usuario.altura} cm</strong>, has <strong>${usuario.pesoLoggeado.length}</strong> logged weights in the system, and <strong>${usuario.calorieLoggeado.length}</strong> logged calorie records in the system`
         let consoleLogTempDelete = document.createElement("div")
         consoleLogTempDelete.innerHTML = `<button type="button" class="btn btn-primary" id="delete${indexUsuario}" ><i class="fas fa-trash-alt"></i></button>`
         consoleLogTemp.append(consoleLogTempUser, consoleLogTempDelete)
@@ -194,6 +195,87 @@ function logPeso() {
     calcReturn.append(contenedor)
 }
 
+//La funcion agregarCalories() tiene un EventListener "click" que genera un formulario dinamico y el EventListener "submit" del formulario ejecuta la funcion logCalories(). 
+function agregarCalories() {
+    let calcReturn = document.getElementById("calcReturn")
+    calcReturn.innerHTML = ``
+
+    let formulario = document.createElement("form")
+    formulario.setAttribute("id","formulario")
+    formulario.setAttribute("class","form")
+    formulario.innerHTML = `
+        <div class="">
+            <label for="nombreUsuario" class="form-label">User</label>
+            <input type="text" class="form-control nombre" id="nombreUsuario" required>
+        </div>
+        <div class="">
+            <label for="activity" class="form-label">Activity</label>
+            <input type="text" class="form-control" id="activity" required>
+        </div>
+        <div class="">
+            <label for="activityTime" class="form-label">Time spent (h)</label>
+            <input type="number" class="form-control" id="activityTime" required>
+        </div>
+        <div class="">
+            <label for="fecha" class="form-label">Date:</label>
+            <input type="date" id="fecha" class="fecha" name="Date" value="2015-07-22" required> 
+        </div>
+        <button type="submit" class="btn btn-primary submitDatos" id="submitDatos" ><svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"></path> </g></svg></button>
+        `
+    
+    let formularioReturn = document.getElementById("formularioReturn")
+    formularioReturn.innerHTML = ``
+    formularioReturn.append(formulario)
+    formulario.addEventListener("submit", (e) => {
+        e.preventDefault()
+        logCalories()
+    })
+}
+
+//La funcion logPeso() valida que el nombre ingresado (usuario) este en el sistema. Si el nombre es valido luego valida que la fecha no haya sido declarada por este usuario. Si las dos condiciones se cumplen la funcion declara un array con los datos "date" y "weight" que luego se hace push al array usuario.pesoLoggeado
+function logCalories() {
+    calcReturn.innerHTML = ``
+
+    let nombreIngresado = document.getElementById("nombreUsuario").value;
+    let actividadIngresada = document.getElementById("activity").value
+    let duracionIngresado = document.getElementById("activityTime").value;
+    let diaIngresado = new Date(document.getElementById("fecha").value)
+    diaIngresado = diaIngresado.toLocaleDateString()
+    let contenedor = document.createElement("div")
+    contenedor.setAttribute("class", "infoReturn")
+    let consoleLog1 = document.createElement("p")
+                                    
+    let tempUsuario = usuarios.find((el) => el.persona.toLowerCase() == nombreIngresado.toLowerCase())
+    if (tempUsuario === undefined) {
+        consoleLog1.innerHTML = `The user was not found in the system`
+        contenedor.append(consoleLog1)
+
+    } else {  
+        let diaUsuario = tempUsuario.calorieLoggeado.find((el) => el[0] == diaIngresado)
+        if (diaUsuario === undefined) {
+            fetch(`https://api.api-ninjas.com/v1/caloriesburned?activity=${actividadIngresada}`, { 
+                method: 'GET',
+                headers: { 'X-Api-Key': 'lgNDMAvMoaLjb7cpQUQTYg==ubbgMEPFvewYhRL5'}
+                })
+                .then((succes) => succes.json())
+                .then((result) => {
+                    console.log(result[0]);
+                    let caloriesSpent = (parseInt(result[0].calories_per_hour) * parseInt(duracionIngresado));
+                    let calorieDia = [diaIngresado, result[0].name, parseInt(result[0].calories_per_hour), parseInt(duracionIngresado), caloriesSpent];
+                    tempUsuario.calorieLoggeado.push(calorieDia);
+                    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+                    consoleLog1.innerHTML = `The user ${nombreIngresado} spent ${duracionIngresado} minutes exercising and burnt ${caloriesSpent} calories`
+                })
+                .catch((error) => {
+                    console.log(error);
+                    consoleLog1.innerHTML = `We were not able to found this sport/activity in our database`
+                })
+            }
+        }
+    contenedor.append(consoleLog1)              
+    calcReturn.append(contenedor)
+}
+
 //La funcion usuarioPesosLoggeados() tiene un EventListener "click" que genera un formulario dinamico y el EventListener "submit" del formulario ejecuta la funcion verPesos(). 
 function usuarioPesosLoggeados(){
     let calcReturn = document.getElementById("calcReturn")
@@ -212,6 +294,7 @@ function usuarioPesosLoggeados(){
             <select class="form-select" id="weightBmi">
             <option value="1">Weight</option>
             <option value="2">BMI</option>
+            <option value="3">Calories</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary submitDatos" id="submitDatos" ><svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"></path> </g></svg></button>
@@ -245,6 +328,10 @@ function verPesos(){
     } else if (tempUsuario !== undefined) {  
         let tempPesos = tempUsuario.pesoLoggeado
         tempPesos.sort((a,b) => {
+            return new Date(b[0]) - new Date (a[0])})
+
+        let tempCal = tempUsuario.calorieLoggeado
+        tempCal.sort((a,b) => {
             return new Date(b[0]) - new Date (a[0])})
 
         if (optionWeightBmi == 1) {
@@ -299,7 +386,8 @@ function verPesos(){
                 chart.container('imageReturn');
                 chart.draw();
             });
-        } else {
+            listenDelete(tempPesos, verPesos)
+        } else if (optionWeightBmi == 2) {
             consoleLog1.innerHTML = `The calculated BMIs for <strong>${nombreIngresado}</strong> are: `
             contenedor.append(consoleLog1)
             for(let peso of tempPesos){
@@ -351,8 +439,61 @@ function verPesos(){
                 chart.container('imageReturn');
                 chart.draw();
             });
-        }    
-        listenDelete(tempPesos, verPesos)
+        } else {
+            consoleLog1.innerHTML = `The calories spent for <strong>${nombreIngresado}</strong> are: `
+            contenedor.append(consoleLog1)
+            for(let calories of tempCal){
+                let indexCal = tempCal.indexOf(calories)
+                let consoleLogTemp = document.createElement("div")
+                consoleLogTemp.setAttribute("class", "usersReturn")
+                let consoleLogTempCal = document.createElement("p")
+                consoleLogTempCal.innerHTML = `Date: ${calories[0]}, Total calories burnt ${calories[1]}: ${calories[4]} cal (${calories[3]})`
+                let consoleLogTempDelete = document.createElement("div")
+                consoleLogTempDelete.innerHTML = `<button type="button" class="btn btn-primary" id="delete${indexCal}" ><i class="fas fa-trash-alt"></i></button>`
+                consoleLogTemp.append(consoleLogTempCal, consoleLogTempDelete)
+                contenedor.append(consoleLogTemp)
+            }
+            calcReturn.append(contenedor)     
+            
+            anychart.onDocumentReady(function () {
+                anychart.theme('darkEarth');
+                
+                let grafico = document.createElement("div")
+                grafico.setAttribute("class", "imageReturn")
+                grafico.setAttribute("id", "imageReturn")
+                calcReturn.append(grafico)     
+                
+                let dataSet = anychart.data.set(tempCal);
+                let firstSeriesData = dataSet.mapAs({ x: 0, value: 4 });
+                
+                let chart = anychart.line();
+                let dateTimeScale = anychart.scales.dateTime();
+                chart.xScale(dateTimeScale)
+                chart.animation(true);
+                chart.padding([10, 20, 5, 20]);
+                chart.crosshair().enabled(true).yLabel(false).yStroke(null);
+                chart.tooltip().positionMode('point');
+                chart.title(
+                    `Graph showing calories burnt by date for user ${nombreIngresado}`
+                );
+                    
+                chart.yAxis().title('Calories');
+                chart.xAxis().labels().padding(5);
+                    
+                let firstSeries = chart.line(firstSeriesData);
+                firstSeries.hovered().markers().enabled(true).type('circle').size(4);
+                firstSeries
+                .tooltip()
+                .position('right')
+                .anchor('left-center')
+                .offsetX(5)
+                .offsetY(5);
+
+                chart.container('imageReturn');
+                chart.draw();
+            });
+            listenDelete(tempCal, verPesos)
+        }
     }
 }
 
@@ -463,4 +604,3 @@ function calcularBmi(){
     calcReturn.append(contenedor)
     calcReturn.append(imageReturn)
 }
-

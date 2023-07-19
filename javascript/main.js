@@ -1,5 +1,6 @@
 //Declarar un array vacio "usuarios" global
 let usuarios = []
+let actividades = []
 
 //Funcion para hacer fetch al JSON con datos de los usuarios
 let cargarPesosAPI = async() =>{
@@ -27,6 +28,10 @@ buttonVerUsuarios.addEventListener("click", verUsuarios)
 // Ingresar datos de peso para un usuario del sistema
 let buttonAñadirPeso = document.getElementById("buttonAñadirPeso") 
 buttonAñadirPeso.addEventListener("click", agregarPeso)
+
+// Ingresar datos de calorias para un usuario del sistema
+let buttonAñadirCalorias = document.getElementById("buttonAñadirCalories") 
+buttonAñadirCalorias.addEventListener("click", agregarCalories)
 
 // Consultar pesos de un usuario en el sistema y grafico en funcion del tiempo
 let buttonConsultarPeso = document.getElementById("buttonConsultarPeso")
