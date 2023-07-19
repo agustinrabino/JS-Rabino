@@ -264,7 +264,7 @@ function logCalories() {
                     let calorieDia = [diaIngresado, result[0].name, parseInt(result[0].calories_per_hour), parseInt(duracionIngresado), caloriesSpent];
                     tempUsuario.calorieLoggeado.push(calorieDia);
                     localStorage.setItem("usuarios", JSON.stringify(usuarios));
-                    consoleLog1.innerHTML = `The user ${nombreIngresado} spent ${duracionIngresado} minutes exercising and burnt ${caloriesSpent} calories`
+                    consoleLog1.innerHTML = `The user ${nombreIngresado} spent ${duracionIngresado} hours exercising and burnt ${caloriesSpent} calories`
                 })
                 .catch((error) => {
                     console.log(error);
