@@ -1,7 +1,7 @@
 //Variable año para definir edad del usuario
 let fechaHoy = new Date()
 
-//Constructor Usuario: guarda nombre, fecha de nacimiento, edad y altura de un nuevo usuario. Ademas crea un array vacio "pesoLoggeado" en el cual el usuario puede ingresar sus pesos.
+//Constructor Usuario: guarda nombre, fecha de nacimiento, edad y altura de un nuevo usuario. Ademas crea un array vacio "pesoLoggeado" en el cual el usuario puede ingresar sus pesos y un array vacio "calorieLoggeado" para poder registrar actividades.
 class Usuario{
     constructor(persona, nacimiento, altura){
         this.persona = persona,
@@ -12,7 +12,7 @@ class Usuario{
     }
 } 
 
-//TODAS LAS ACCIONES(BOTONES) SON FUNCIONES COMPUESTAS. EL EVENT "CLICK" DEL MENU VA A DESPLEGAR UN FORMULARIO DINAMICO QUE A SU VEZ TIENE UN EVENT "SUBMIT" INTERNO. EL EVENT SUBMIT INICIA UN DIV DE RETORNO CON LOS DATOS CALCULADOS/INGRESADOS SEGUN CORRESPONDA// 
+//TODAS LAS ACCIONES(BOTONES) SON FUNCIONES COMPUESTAS. EL EVENT "CLICK" DEL SIDEMENU VA A DESPLEGAR UN FORMULARIO DINAMICO QUE A SU VEZ TIENE UN EVENT "SUBMIT" INTERNO. EL EVENT SUBMIT INICIA UN DIV DE RETORNO CON LOS DATOS CALCULADOS/INGRESADOS SEGUN CORRESPONDA// 
 
 //Funcion para eliminar datos. al finalizar la funcion el localStorage se sobreescribe con el nuevo array. La funcion usa un for-of para crear Eventlistener "click" para cada elemento y los remueve con un splice. Incorpora SweetAlert2 para confirmar los delete
 function listenDelete(array, fun){
@@ -161,7 +161,7 @@ function agregarPeso() {
     })
 } 
 
-//La funcion logPeso() valida que el nombre ingresado (usuario) este en el sistema. Si el nombre es valido luego valida que la fecha no haya sido declarada por este usuario. Si las dos condiciones se cumplen la funcion declara un array con los datos "date" y "weight" que luego se hace push al array usuario.pesoLoggeado
+//La funcion logPeso() valida que el nombre ingresado (usuario) este en el sistema. Si el nombre es valido luego valida que la fecha no haya sido declarada por este usuario. Si las dos condiciones se cumplen la funcion declara un array con los datos "date", "weight" y "BMI" que luego se hace push al array usuario.pesoLoggeado
 function logPeso() {
     calcReturn.innerHTML = ``
 
@@ -232,7 +232,7 @@ function agregarCalories() {
     })
 }
 
-//La funcion logPeso() valida que el nombre ingresado (usuario) este en el sistema. Si el nombre es valido luego valida que la fecha no haya sido declarada por este usuario. Si las dos condiciones se cumplen la funcion declara un array con los datos "date" y "weight" que luego se hace push al array usuario.pesoLoggeado
+//La funcion logCalories() valida que el nombre ingresado (usuario) este en el sistema. Si el nombre es valido luego valida que la fecha no haya sido declarada por este usuario. Si las dos condiciones se cumplen la funcion usa un API para buscar las calorias quemadas por hora para el deporte ingresado por el usuasrio. ACLARACION: en la documentacion del API solo ejemplificaba como usarlo definiendo una busqueda. Por lo tanto no consumi el API entero sino lo puse dentro de la funcion. PUEDE DEMORARSE UNOS mSEG. Si la actividad fisica/deporte se encuentra en la base de datos la funcion declara un array con los datos "date", "nombre del deporte", "duracion y "calorias totales" que luego se hace push al array usuario.calorieLoggeado
 function logCalories() {
     calcReturn.innerHTML = ``
 
@@ -308,7 +308,7 @@ function usuarioPesosLoggeados(){
     })
 } 
 
-//La funcion verPesos() valida que el nombre ingresado (usuario) este en el sistema. Si el nombre es valido luego ordena los pesos "usuario.pesoLoggeado". La funcion devuelve un "p" con los pesos ingresados por el usuario y un grafico en funcion del tiempo
+//La funcion verPesos() valida que el nombre ingresado (usuario) este en el sistema. Si el nombre es valido luego ordena los pesos o BMI o calorias del "usuario" cronologicamente. La funcion devuelve un "p" con los datos ingresados por el usuario y un grafico en funcion del tiempo
 function verPesos(){ 
     calcReturn.innerHTML = ``
     let nombreIngresado = document.getElementById("nombreUsuario").value;

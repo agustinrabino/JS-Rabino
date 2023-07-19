@@ -1,8 +1,7 @@
 //Declarar un array vacio "usuarios" global
 let usuarios = []
-let actividades = []
 
-//Funcion para hacer fetch al JSON con datos de los usuarios
+//Funcion async para hacer fetch al JSON con datos de los usuario precargado
 let cargarPesosAPI = async() =>{
     const res = await fetch("weightAPI.json")
     usuarios = await res.json()
@@ -10,6 +9,7 @@ let cargarPesosAPI = async() =>{
     console.log(usuarios)
     localStorage.setItem("usuarios", JSON.stringify(usuarios))
 }
+
 //Iniciar "usuarios" array en el localStorage
 if(localStorage.getItem("usuarios")){
     usuarios = JSON.parse(localStorage.getItem("usuarios"))
