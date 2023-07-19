@@ -447,7 +447,7 @@ function verPesos(){
                 let consoleLogTemp = document.createElement("div")
                 consoleLogTemp.setAttribute("class", "usersReturn")
                 let consoleLogTempCal = document.createElement("p")
-                consoleLogTempCal.innerHTML = `Date: ${calories[0]}, Total calories burnt ${calories[1]}: ${calories[4]} cal (${calories[3]})`
+                consoleLogTempCal.innerHTML = `Date: ${calories[0]}, Total calories burnt ${calories[1]}: ${calories[4]} cal (${calories[3]} hours)`
                 let consoleLogTempDelete = document.createElement("div")
                 consoleLogTempDelete.innerHTML = `<button type="button" class="btn btn-primary" id="delete${indexCal}" ><i class="fas fa-trash-alt"></i></button>`
                 consoleLogTemp.append(consoleLogTempCal, consoleLogTempDelete)
